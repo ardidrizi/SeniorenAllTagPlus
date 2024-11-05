@@ -95,4 +95,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 If you have any questions, feel free to open an issue or contact the maintainers at ardianidizi@gmail.com.
-```
