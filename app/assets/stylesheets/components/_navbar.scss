@@ -4,6 +4,72 @@
   border-bottom: 1px solid #ccc;
 }
 
+.navbar-lewagon {
+  background: #0f1e2c;
+  border-bottom: none;
+  padding: 0.75rem 0;
+}
+
+.navbar-logo {
+  width: 42px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.brand-text {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.navbar-actions {
+  gap: 0.5rem;
+}
+
+.btn-nav {
+  font-size: 0.95rem;
+}
+
+.btn-outline-light.nav-pill {
+  border-radius: 999px;
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+.btn-outline-light.nav-pill:hover {
+  color: #fff;
+}
+
+.btn-primary.nav-pill {
+  border-radius: 999px;
+}
+
+.btn-avatar {
+  padding: 0.15rem;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }

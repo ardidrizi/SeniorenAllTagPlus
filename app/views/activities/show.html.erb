@@ -3,19 +3,21 @@
   <div id="activityImageCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <!-- Check if there are any photos; if not, display the default image -->
-      <% if @activity.photos.present? %>
-        <% @activity.photos.each_with_index do |photo, index| %>
-          <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-            <!-- Display activity image using Cloudinary's 'cl_image_tag' helper -->
-            <%= cl_image_tag photo.key, class: "carousel-image" %>
+        <% if @activity.photos.present? %>
+          <% @activity.photos.each_with_index do |photo, index| %>
+            <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+              <%= cloudinary_or_active_storage_image_tag(
+                photo,
+                default: "bar.png",
+                class: "carousel-image"
+              ) %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="carousel-item active">
+            <%= image_tag "bar.png", class: "carousel-image", alt: "Default Activity Photo" %>
           </div>
         <% end %>
-      <% else %>
-        <!-- Use the default photo when no photos are available -->
-        <div class="carousel-item active">
-          <%= image_tag "bar.png", class: "carousel-image", alt: "Default Activity Photo" %>
-        </div>
-      <% end %>
     </div>
 
     <!-- Carousel navigation buttons (Previous and Next) -->
@@ -146,12 +148,12 @@
             <div class="activity-card mb-2">
               <div class="card-body">
                 <!-- Activity Image -->
-                <% if activity.photos.present? %>
-                  <%= cl_image_tag activity.photos.first.key, class: "card-img-top", alt: "Activity Photo" %>
-                <% else %>
-                  <!-- Use a default image if no photos are available -->
-                  <%= image_tag "bar.png", class: "card-img-top", alt: "Default Activity Photo" %>
-                <% end %>
+                <%= cloudinary_or_active_storage_image_tag(
+                  activity.photos.first,
+                  default: "bar.png",
+                  class: "card-img-top",
+                  alt: "Activity Photo"
+                ) %>
 
                 <!-- Activity Details -->
                 <div class="pb-2 px-2">

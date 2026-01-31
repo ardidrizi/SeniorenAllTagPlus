@@ -8,11 +8,12 @@
   <% @chatrooms.each do |chatroom| %>
     <%= link_to chatroom_path(chatroom) do %>
     <div class="card-product">
-      <% if chatroom.activity.photos.present? %>
-          <%= cl_image_tag chatroom.activity.photos.first.key, class: "acticity-photo", alt: "activity photo" %>
-        <% else %>
-          <%= image_tag "logo.png" %>
-      <% end %>
+      <%= cloudinary_or_active_storage_image_tag(
+        chatroom.activity.photos.first,
+        default: "logo.png",
+        class: "acticity-photo",
+        alt: "activity photo"
+      ) %>
     <div class="card-product-infos">
         <h4><%= chatroom.activity.name %></h4>
         <p><%= chatroom.activity.address %>📌</p>

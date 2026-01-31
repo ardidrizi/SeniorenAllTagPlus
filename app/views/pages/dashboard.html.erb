@@ -1,127 +1,139 @@
-<h1 class="h1-dashboard"><i class="fa-solid fa-person-walking" style="color: #b9f2df;"></i></h1>
+<main class="dashboard-page">
+  <header class="dashboard-hero mb-4">
+    <div>
+      <p class="eyebrow text-primary">Welcome back, <%= current_user.first_name %>!</p>
+      <h1 class="display-5 fw-bold text-dark">Curated moments to keep your days meaningful.</h1>
+      <p class="text-muted">
+        Review your activities, chat with friends, and open the door for new adventures.
+      </p>
+    </div>
+    <div class="dashboard-actions">
+      <%= link_to "Create an activity", new_activity_path, class: "btn btn-primary" %>
+      <%= link_to "Browse calendar", activities_path, class: "btn btn-outline-secondary ms-2" %>
+    </div>
+  </header>
 
-<!--Activities you own-->
-<div class="row justify-content-center m-2" data-controller="my-activity-dashboard">
-  <% activity_count = @my_activities.count %>
-  <button data-action="click->my-activity-dashboard#showMyActivity" class="btn btn-secondary m-2"><%= activity_count > 1 ? "My activities" : "My activity" %> (<%= activity_count %>) <i class="fa-solid fa-square-caret-down" style="color: #b9f2df;"></i></button>
-  <div class="d-none" data-my-activity-dashboard-target="dropdown">
-    <% @my_activities.each do |activity| %>
-      <%# <%= link_to activity_path(activity) do %>
-        <div class="card-product" style="height: 150px">
-          <div class="card-image-holder">
-          <% if activity.photos.present? %>
-            <%= cl_image_tag activity.photos.first.key, class: "carousel-image", alt: "Activity Photo" %>
-          </div>
-          <% else %>
-          <div class="card-image-holder">
-          <!-- Use the default photo when no photos are available -->
-            <%= image_tag "bar.png", class: "carousel-image", alt: "Default Activity Photo" %>
-          </div>
-          <% end %>
-          <div class="card-product-infos">
-             <%= link_to activity_path(activity) do %>
-            <h2><%= activity.name %></h2>
-             <% end %>
-            <p><%= activity.date_time.strftime('%^a, %d %^b, %Y at %H:%M') %></p>
-            <div class="mt-4">
-              <%= link_to "Delete", activity_path(activity), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn--delete" %>
-              <%= link_to "Edit", edit_activity_path(activity), class: "btn btn--edit"%>
-            </div>
-          </div>
-        </div>
-      <%# <% end %>
-    <% end %>
-  </div>
-</div>
-
-
-<!-- Activities that I own and booked by participants -->
-<div class="row justify-content-center m-2" data-controller="my-activity-dashboard">
-  <% bookings_count = @my_activity_bookings.count %>
-  <button data-action="click->my-activity-dashboard#showMyActivity" class="btn btn-secondary m-2"><%= bookings_count > 1 ? "My activity participants" : "My activity participant" %> (<%= bookings_count %>) <i class="fa-solid fa-square-caret-down" style="color: #b9f2df;"></i></button>
-  <div class="d-none" data-my-activity-dashboard-target="dropdown" >
-    <% @my_activity_bookings.each do |booking| %>
-      <%# <%= link_to activity_path(booking.activity_id) do %>
-        <div class="card-product" style="height: 150px">
-          <% if booking.participant.profile_image.attached? %>
-            <div class="card-image-holder">
-              <%= image_tag booking.participant.profile_image, alt: "User Profile Image" %>
-             </div>
-          <% else %>
-           <div class="card-image-holder">
-          <!-- Use the default photo when no photos are available -->
-          <%= image_tag "Gym.png", class: "", alt: "Default Participant Photo" %>
-          </div>
-          <% end %>
-          <div class="card-product-infos">
-            <% if booking.status == nil %>
-             <% message = "is requesting to join" %>
-            <% else %>
-              <% message = "" %>
-            <% end %>
-            <p><%= "#{booking.participant.first_name} #{booking.participant.last_name}  #{message}" %></p>
-             <%= link_to activity_path(booking.activity_id) do %>
-              <h2><%= booking.activity.name %></h2>
-              <% end %>
-
-            <% if booking.status == nil %>
-              <div class="mt-3">
-                <%= link_to "Decline", decline_booking_path(booking), method: :get, class: "btn btn--delete" %>
-                <%= link_to "Accept", accept_booking_path(booking), method: :get, class: "btn btn--edit" %>
-              </div>
-
-            <% elsif booking.status == true %>
-              <p class="status-text accept"><strong>Approved</strong></p>
-            <% else %>
-              <p class="status-text decline"><strong>Declined</strong></p>
-            <% end %>
-          </div>
-        </div>
-      <%# <% end %>
-    <% end %>
-  </div>
-</div>
-
-<!--Activities you booked as participant-->
-<div class="row justify-content-center m-2" data-controller="my-activity-dashboard">
-  <% booking_count = @my_bookings.count %>
-  <button data-action="click->my-activity-dashboard#showMyActivity" class="btn btn-secondary m-2"><%= booking_count > 1 ? "My bookings" : "My booking" %> (<%= booking_count %>) <i class="fa-solid fa-square-caret-down" style="color: #b9f2df;"></i></button>
-  <div class="d-none" data-my-activity-dashboard-target="dropdown" >
-    <% @my_bookings.each do |booking| %>
-      <%# <%= link_to activity_path(booking.activity_id) do %>
-        <div class="card-product" style="height: 160px">
-          <% if booking.activity.photos.present? %>
-           <div class="card-image-holder">
-            <%= cl_image_tag booking.activity.photos.first.key, class: "carousel-image", alt: "Activity Photo" %>
-            </div>
-          <% else %>
-          <!-- Use the default photo when no photos are available -->
-           <div class="card-image-holder">
-          <%= image_tag "bar.png", class: "carousel-image", alt: "Default Activity Photo" %>
-          </div>
-          <% end %>
-          <div class="card-product-infos">
-            <%= link_to activity_path(booking.activity_id) do %>
-            <h2><%= booking.activity.name %></h2>
-            <% end %>
-
-            <p><%= booking.activity.date_time.strftime('%^a, %d %^b, %Y at %H:%M') %></p>
-            <% if booking.status == nil %>
-              <p class="waiting"><strong>Waiting for approval</strong></p>
-              <div class="mt-2">
-                <%= link_to "Cancel", booking_path(booking.id), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn--delete" %>
-              </div>
-            <% elsif booking.status == false %>
-              <p class="decline"><strong>Declined</strong></p>
-            <% else %>
-              <p class="accept"><strong>Approved</strong></p>
-              <div class="mt-2">
-                <%= link_to "Leave", booking_path(booking.id), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn--delete" %>
+  <section class="dashboard-grid">
+    <article class="dashboard-card">
+      <div class="dashboard-card__header">
+        <h2>My activities</h2>
+        <span class="badge rounded-pill bg-light text-dark"><%= @my_activities.count %></span>
+      </div>
+      <div class="dashboard-card__body">
+        <% if @my_activities.any? %>
+          <div class="stacked-items">
+            <% @my_activities.each do |activity| %>
+              <div class="stacked-item">
+                <div class="stacked-item__image">
+                  <%= cloudinary_or_active_storage_image_tag(
+                    activity.photos.first,
+                    default: "bar.png",
+                    class: "stacked-image"
+                  ) %>
+                </div>
+                <div class="stacked-item__content">
+                  <%= link_to activity_path(activity), class: "stacked-item__title" do %>
+                    <%= activity.name %>
+                  <% end %>
+                  <p class="stacked-item__meta"><%= activity.date_time.strftime('%^a, %d %^b, %Y at %H:%M') %></p>
+                </div>
               </div>
             <% end %>
           </div>
-        </div>
-      <%# <% end %>
-    <% end %>
-  </div>
-</div>
+        <% else %>
+          <p class="text-muted">You haven't created any activities yet.</p>
+        <% end %>
+      </div>
+    </article>
+
+    <article class="dashboard-card">
+      <div class="dashboard-card__header">
+        <h2>Participants</h2>
+        <span class="badge rounded-pill bg-light text-dark"><%= @my_activity_bookings.count %></span>
+      </div>
+      <div class="dashboard-card__body">
+        <% if @my_activity_bookings.any? %>
+          <div class="stacked-items">
+            <% @my_activity_bookings.each do |booking| %>
+              <div class="stacked-item">
+                <div class="stacked-item__image">
+                  <%= cloudinary_or_active_storage_image_tag(
+                    booking.participant.profile_image,
+                    default: "user.png",
+                    class: "stacked-avatar"
+                  ) %>
+                </div>
+                <div class="stacked-item__content">
+                  <p class="fw-semibold mb-0">
+                    <%= [booking.participant.first_name, booking.participant.last_name].join(" ") %>
+                  </p>
+                  <p class="stacked-item__meta"><%= booking.activity.name %></p>
+                  <div class="stacked-item__actions">
+                    <% if booking.status.nil? %>
+                      <%= link_to decline_booking_path(booking), method: :get, class: "btn btn-sm btn-outline-danger me-2" do %>
+                        Decline
+                      <% end %>
+                      <%= link_to accept_booking_path(booking), method: :get, class: "btn btn-sm btn-outline-success" do %>
+                        Accept
+                      <% end %>
+                    <% elsif booking.status %>
+                      <span class="badge rounded-pill text-bg-success">Approved</span>
+                    <% else %>
+                      <span class="badge rounded-pill text-bg-danger">Declined</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted">No one has requested to join your activities yet.</p>
+        <% end %>
+      </div>
+    </article>
+
+    <article class="dashboard-card">
+      <div class="dashboard-card__header">
+        <h2>My bookings</h2>
+        <span class="badge rounded-pill bg-light text-dark"><%= @my_bookings.count %></span>
+      </div>
+      <div class="dashboard-card__body">
+        <% if @my_bookings.any? %>
+          <div class="stacked-items">
+            <% @my_bookings.each do |booking| %>
+              <div class="stacked-item">
+                <div class="stacked-item__image">
+                  <%= cloudinary_or_active_storage_image_tag(
+                    booking.activity.photos.first,
+                    default: "bar.png",
+                    class: "stacked-image"
+                  ) %>
+                </div>
+                <div class="stacked-item__content">
+                  <%= link_to activity_path(booking.activity_id), class: "stacked-item__title" do %>
+                    <%= booking.activity.name %>
+                  <% end %>
+                  <p class="stacked-item__meta">
+                    <%= booking.activity.date_time.strftime('%^a, %d %^b, %Y at %H:%M') %>
+                  </p>
+                  <div class="stacked-item__actions">
+                    <% if booking.status.nil? %>
+                      <span class="badge rounded-pill text-bg-warning">Waiting for approval</span>
+                    <% elsif booking.status %>
+                      <span class="badge rounded-pill text-bg-success">Approved</span>
+                      <%= link_to "Leave", booking_path(booking.id), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger ms-2" %>
+                    <% else %>
+                      <span class="badge rounded-pill text-bg-danger">Declined</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted">You haven't joined any activities yet.</p>
+        <% end %>
+      </div>
+    </article>
+  </section>
+</main>

@@ -31,12 +31,12 @@
   <% @activities.each do |activity| %>
     <%= link_to activity_path(activity) do %>
       <div class="custom--card">
-        <% if activity.photos.present? %>
-          <%= cl_image_tag activity.photos.first.key, alt: "Activity Photo" %>
-        <% else %>
-          <!-- Use the default photo when no photos are available -->
-          <%= image_tag "bar.png", alt: "Default Activity Photo" %>
-        <% end %>
+        <%= cloudinary_or_active_storage_image_tag(
+          activity.photos.first,
+          default: "bar.png",
+          alt: "Activity Photo",
+          class: "card-img-top"
+        ) %>
         <div class="pb-2 px-2">
           <h4 class="my-1 mt-2 mb-0 section-title"><%= activity.name %></h4>
           <h5 class="pb-0 mt-1"><%= activity.date_time.strftime('%^a, %d %^b, %Y at %H:%M') %></h5>

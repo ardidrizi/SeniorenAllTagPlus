@@ -1,2 +1,26 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<section class="home-hero card mb-4">
+  <div class="home-hero-body">
+    <p class="eyebrow">SeniorenAllTagPlus</p>
+    <h1>The day feels brighter when we move through it together.</h1>
+    <p class="lead-text">
+      Discover curated activities, invite friends, and stay connected with a welcoming community of
+      peers that values wellness, creativity, and purpose.
+    </p>
+    <div class="hero-actions">
+      <%= link_to "Browse activities", activities_path, class: "btn btn-primary btn-lg" %>
+      <% if user_signed_in? %>
+        <%= link_to "Create an activity", new_activity_path, class: "btn btn-outline-light btn-lg ms-2" %>
+      <% else %>
+        <%= link_to "Create an account", new_user_registration_path, class: "btn btn-outline-light btn-lg ms-2" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="home-hero-highlight">
+    <h3>Feature spotlight</h3>
+    <ul>
+      <li><i class="fa-solid fa-hand-holding-heart"></i> Meaningful small-group meetups</li>
+      <li><i class="fa-solid fa-comments"></i> Chatrooms that keep the conversation going</li>
+      <li><i class="fa-solid fa-map-location-dot"></i> Map-integrated experiences across the city</li>
+    </ul>
+  </div>
+</section>

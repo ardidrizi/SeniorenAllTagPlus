@@ -61,6 +61,32 @@ rails server
 
 Then, open your browser and visit `http://localhost:3000`.
 
+## Deploying to Heroku
+
+1. Install the Heroku CLI and make sure you are authenticated (`heroku login`).
+2. Create a Heroku app with `heroku create`. Set the Ruby buildpack if needed.
+3. Push the latest code: `git push heroku master`.
+4. Configure sensitive values:
+   - `heroku config:set RAILS_MASTER_KEY=<your-master-key>`
+   - `heroku config:set CLOUDINARY_URL=cloudinary://<api_key>:<api_secret>@<cloud_name>`
+   - `heroku config:set MAPBOX_API_KEY=<your-mapbox-key>`
+   - `heroku config:set SENIORENALLTAGPLUS_DATABASE_PASSWORD=<your-db-password>`
+5. Ensure assets precompile by running `heroku run rails assets:precompile` if you hear issues about missing packs.
+6. Run migrations: `heroku run rails db:migrate`.
+7. Open the live app with `heroku open`.
+
+## Cloudinary Setup
+
+1. Store credentials via `rails credentials:edit` (ensure `config/master.key` is available locally):
+   ```yaml
+   cloudinary:
+     cloud_name: your_cloud_name
+     api_key: your_api_key
+     api_secret: your_api_secret
+   ```
+2. Active Storage is configured to use Cloudinary in production (`config/environments/production.rb`).
+3. Attachments uploaded in production now use Cloudinary automatically via Active Storage.
+
 ## Creating a Demo User
 
 To create a demo user, follow these steps:
