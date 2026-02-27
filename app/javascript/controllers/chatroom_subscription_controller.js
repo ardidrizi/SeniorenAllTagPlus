@@ -4,7 +4,7 @@ import { createConsumer } from "@rails/actioncable"
 // Connects to data-controller="chatroom-subscription"
 export default class extends Controller {
   static values = { chatroomId: Number, currentUserId: Number }
-  static targets = ["messages"]
+  static targets = ["messages", "formError"]
 
   connect() {
     this.channel = createConsumer().subscriptions.create(
@@ -40,11 +40,46 @@ export default class extends Controller {
   }
 
   resetForm(event) {
-    event.target.reset()
+    const { success, fetchResponse } = event.detail
+
+    if (success) {
+      this.clearError()
+      event.target.reset()
+      return
+    }
+
+    if (fetchResponse) {
+      fetchResponse.responseText.then((responseText) => {
+        try {
+          const parsed = JSON.parse(responseText)
+          const errors = parsed.errors || ["Message could not be sent"]
+          this.showError(errors.join(", "))
+        } catch {
+          this.showError("Message could not be sent")
+        }
+      })
+      return
+    }
+
+    this.showError("Message could not be sent")
+  }
+
+  showError(message) {
+    if (!this.hasFormErrorTarget) return
+
+    this.formErrorTarget.textContent = message
+    this.formErrorTarget.classList.remove("d-none")
+  }
+
+  clearError() {
+    if (!this.hasFormErrorTarget) return
+
+    this.formErrorTarget.textContent = ""
+    this.formErrorTarget.classList.add("d-none")
   }
 
   disconnect() {
     console.log("Unsubscribed from the chatroom")
-    this.channel.unsubscribe()
+    if (this.channel) this.channel.unsubscribe()
   }
 }

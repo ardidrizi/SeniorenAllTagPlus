@@ -15,11 +15,11 @@ class ChatroomsController < ApplicationController
   end
 
   def show
-    @activity = Activity.find(params[:id])
+    @chatroom = Chatroom.includes(:activity).find(params[:id])
+    @activity = @chatroom.activity
     @activities_booked = current_user.bookings.where(status: true)
     # looking for the booking of the current user that is approved and has the activity of the current page
     @activity_booked = @activities_booked.find_by(activity_id: @activity.id)
-    @chatroom = @activity.chatroom
     @message = Message.new
   end
 end
