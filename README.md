@@ -1,22 +1,33 @@
 # SeniorenAllTagPlus
 
-SeniorenAllTagPlus is a project aimed at providing daily assistance and activities for senior citizens. The application is built using Ruby, HTML, SCSS, and JavaScript.
+SeniorenAllTagPlus is a Ruby on Rails application that supports senior citizens in their daily routines with activity planning, wellness guidance, and social features.
 
 ## Table of Contents
 
-- [Introduction](#introduction)
+- [Tech Stack](#tech-stack)
 - [Features](#features)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Configuration](#configuration)
 - [Usage](#usage)
+- [Testing](#testing)
 - [Demo](#demo)
+- [Deployment (Heroku)](#deployment-heroku)
+- [Cloudinary Setup](#cloudinary-setup)
 - [Creating a Demo User](#creating-a-demo-user)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 
-## Introduction
+## Tech Stack
 
-SeniorenAllTagPlus aims to support senior citizens in their daily activities by providing a range of tools and resources. The application is designed to be user-friendly and easily accessible.
+- Ruby 3.1.2
+- Rails 7
+- PostgreSQL
+- Devise authentication
+- Bootstrap 5 + SCSS
+- Stimulus / Turbo
+- Cloudinary + Active Storage
 
 ## Features
 
@@ -26,9 +37,18 @@ SeniorenAllTagPlus aims to support senior citizens in their daily activities by 
 - Easy-to-use interface
 - Multi-language support
 
+## Prerequisites
+
+Before running the app locally, ensure you have:
+
+- Ruby 3.1.2
+- Bundler
+- PostgreSQL
+- Node.js (for JavaScript runtime tooling used by Rails)
+
 ## Demo
 
-You can try out the application [here](https://sennioren-all-tag-plus-30bf76768159.herokuapp.com/users/sign_in).
+You can try out the application here: [Demo Sign In](https://sennioren-all-tag-plus-30bf76768159.herokuapp.com/users/sign_in).
 
 ## Installation
 
@@ -42,7 +62,7 @@ To install and set up this project locally, follow these steps:
     ```sh
     cd SeniorenAllTagPlus
     ```
-3. Install the necessary dependencies:
+3. Install Ruby dependencies:
     ```sh
     bundle install
     ```
@@ -50,6 +70,14 @@ To install and set up this project locally, follow these steps:
     ```sh
     rails db:setup
     ```
+
+## Configuration
+
+Create and configure your environment variables (for example using `.env` in development if you use `dotenv-rails`). Typical values include:
+
+- `MAPBOX_API_KEY`
+- `CLOUDINARY_URL` (or configure via Rails credentials)
+- Database credentials used by your PostgreSQL setup
 
 ## Usage
 
@@ -61,7 +89,15 @@ rails server
 
 Then, open your browser and visit `http://localhost:3000`.
 
-## Deploying to Heroku
+## Testing
+
+Run the test suite with:
+
+```sh
+bundle exec rspec
+```
+
+## Deployment (Heroku)
 
 1. Install the Heroku CLI and make sure you are authenticated (`heroku login`).
 2. Create a Heroku app with `heroku create`. Set the Ruby buildpack if needed.
