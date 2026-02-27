@@ -1,0 +1,42 @@
+{
+  "title": "SeniorenAllTagPlus",
+  "pitch": "A bridge between generations, connecting seniors with peers and compassionate volunteers while providing practical day-to-day support services.",
+  "target": "Elderly individuals affected by loneliness.",
+  "problem": "Loneliness and limited access to approachable digital support tools for seniors.",
+  "solution": "A simple, senior-friendly platform that connects seniors and volunteers while offering helpful daily-life services.",
+  "role": "Team Lead (group project of 4)",
+  "contributions": [
+    "Led project planning and task breakdown",
+    "Reviewed and merged code changes",
+    "Contributed across frontend and backend implementation",
+    "Coordinated team communication and delivery"
+  ],
+  "techStack": [
+    "Ruby on Rails",
+    "Devise",
+    "PostgreSQL (prod) / SQLite (dev)",
+    "Heroku"
+  ],
+  "features": [
+    "User authentication and account management with Devise",
+    "Activity discovery and management with category-based organization",
+    "Booking flow for joining activities, including accept/decline states",
+    "Dashboard view for tracking user activities and bookings",
+    "Real-time chatrooms and messaging for participant communication",
+    "Map-based activity context using geocoded locations"
+  ],
+  "architecture": "Rails MVC with Devise authentication and ActiveRecord persistence.",
+  "challenges": [
+    "Designing an accessible, simple UX for non-technical users",
+    "Coordinating concurrent team changes and resolving merge conflicts",
+    "Implementing authentication and permission-sensitive flows safely",
+    "Deploying reliably on Heroku with environment-specific configuration"
+  ],
+  "results": [
+    "TBD (add real metrics later)"
+  ],
+  "links": {
+    "demo": "https://senioren-all-tag-plus-c79d436cda54.herokuapp.com/",
+    "repo": "https://github.com/ardidrizi/SeniorenAllTagPlus"
+  }
+}
