@@ -48,7 +48,7 @@ Before running the app locally, ensure you have:
 
 ## Demo
 
-You can try out the application here: [Demo Sign In](https://sennioren-all-tag-plus-30bf76768159.herokuapp.com/users/sign_in).
+You can try out the application here: [Demo Sign In](https://senioren-all-tag-plus-c79d436cda54.herokuapp.com/).
 
 ## Installation
 
