@@ -16,6 +16,8 @@
     <% end %>
   </div>
 
+  <p class="text-danger d-none mb-2" data-chatroom-subscription-target="formError"></p>
+
   <div class="d-flex chat-input">
     <%= simple_form_for [chatroom, message],
       html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex" } do |f| %>
