@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  # root to: "pages#home"
-  root to: 'activities#index'
+
+  root to: 'home#index'
+
   resources :activities do
     resources :bookings, only: %i[create]
   end
@@ -18,5 +19,4 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
   get 'activities/:id/details', to: 'activities#show_details', as: 'activity_details'
-
 end

@@ -1,7 +1,10 @@
 class ActivitiesController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_activity, only: [:show]
 
   def index
+    return public_index unless user_signed_in?
+
     if params[:tag].present?
       @category_id = Category.find_by(name: params[:tag]).id
       @activities = Activity.where(category_id: @category_id)
@@ -21,6 +24,8 @@ class ActivitiesController < ApplicationController
   end
 
   def show
+    return public_show unless user_signed_in?
+
     @activity = Activity.find(params[:id])
     @markers = geocoded_activity_markers(@activity)
     @booking = Booking.new
@@ -82,6 +87,18 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def public_index
+    @activities = Activity.where(public: true).includes(:category).order(date_time: :asc)
+    render :public_index
+  end
+
+  def public_show
+    @activity = Activity.includes(:category).find_by(id: params[:id], public: true)
+    return redirect_to new_user_session_path unless @activity
+
+    render :public_show
+  end
+
   private
 
   def activity_params
@@ -92,6 +109,7 @@ class ActivitiesController < ApplicationController
   def set_activity
     @activity = Activity.find_by(id: params[:id])
   end
+
 
   def geocoded_activity_markers(activity)
     return [] unless activity.present?
