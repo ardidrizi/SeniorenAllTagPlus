@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  # root to: "pages#home"
-  root to: 'activities#index'
+
+  authenticated :user do
+    root to: 'activities#index', as: :authenticated_root
+  end
+
+  unauthenticated do
+    root to: 'home#index'
+  end
+
   resources :activities do
     resources :bookings, only: %i[create]
   end
@@ -18,5 +25,4 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
   get 'activities/:id/details', to: 'activities#show_details', as: 'activity_details'
-
 end

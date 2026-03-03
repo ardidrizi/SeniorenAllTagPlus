@@ -23,6 +23,11 @@ FactoryBot.define do
     difficulty { 2 }
     equipment { 'Comfortable shoes' }
     max_count { 10 }
+    public { false }
+
+    trait :public_preview do
+      public { true }
+    end
   end
 
   factory :chatroom do

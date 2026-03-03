@@ -1,0 +1,11 @@
+<section class="py-3">
+  <h1 class="section-title"><%= @activity.name %></h1>
+  <h5><%= @activity.category.name %></h5>
+  <p><strong>Date and time:</strong> <%= @activity.date_time.strftime('%^a, %d %^b, %Y at %H:%M') %></p>
+  <p><strong>Approximate location:</strong> <%= @activity.address.to_s.split(',').first %></p>
+  <p><%= @activity.description %></p>
+</section>
+
+<div class="mt-3">
+  <%= link_to "Create or Join activities", new_user_registration_path, class: "btn btn-primary" %>
+</div>
