@@ -1,0 +1,32 @@
+<section class="py-4 text-center">
+  <h1 class="section-title">SeniorenAllTagPlus</h1>
+  <p class="lead">Find local activities, stay connected, and enjoy safe social moments every week.</p>
+  <div class="d-flex justify-content-center gap-2 mt-3">
+    <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
+    <%= link_to "Login", new_user_session_path, class: "btn btn-outline-primary" %>
+  </div>
+</section>
+
+<section id="how-it-works" class="py-4">
+  <h2 class="section-title">How it works</h2>
+  <ol>
+    <li>Browse activities by category and date.</li>
+    <li>Create your own activity or request to join one.</li>
+    <li>Meet safely with your local community.</li>
+  </ol>
+</section>
+
+<section class="py-4">
+  <h2 class="section-title">Preview activities</h2>
+  <p>Take a look at upcoming public activities before creating your account.</p>
+  <%= link_to "View activities", activities_path, class: "btn btn-info" %>
+</section>
+
+<footer class="py-4 border-top mt-4">
+  <div class="d-flex flex-wrap gap-3">
+    <%= link_to "About", root_path %>
+    <%= link_to "How it works", "#how-it-works" %>
+    <%= link_to "Safety", root_path %>
+    <%= link_to "Contact", root_path %>
+  </div>
+</footer>
