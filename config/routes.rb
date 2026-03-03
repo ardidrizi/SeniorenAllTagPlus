@@ -1,13 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  authenticated :user do
-    root to: 'activities#index', as: :authenticated_root
-  end
-
-  unauthenticated do
-    root to: 'home#index'
-  end
+  root to: 'home#index'
 
   resources :activities do
     resources :bookings, only: %i[create]

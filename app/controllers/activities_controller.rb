@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show]
 
   def index
-    return public_index if user_signed_out?
+    return public_index unless user_signed_in?
 
     if params[:tag].present?
       @category_id = Category.find_by(name: params[:tag]).id
@@ -24,7 +24,7 @@ class ActivitiesController < ApplicationController
   end
 
   def show
-    return public_show if user_signed_out?
+    return public_show unless user_signed_in?
 
     @activity = Activity.find(params[:id])
     @markers = geocoded_activity_markers(@activity)
